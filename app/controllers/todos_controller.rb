@@ -1,4 +1,9 @@
 class TodosController < ApplicationController
+  def index
+    # set an instance variable for the list of todos
+    @todos = Todo.all
+  end
+  
   def new
     @todo = Todo.new
   end
