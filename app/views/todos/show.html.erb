@@ -1,12 +1,14 @@
-<h1>Showing TODO!</h1>
-
-<p>
-  Name: <%= @todo.name %>
-</p>
-<p>
-  Description: <%= @todo.description %>
-</p>
-
-<%= link_to "Edit", edit_todo_path(@todo) %>
-</br>
-<%= link_to "Return to Listing", todos_path %>
+<div class="container left-align">
+  <h4>Showing TODO!</h4>
+  
+  <p>
+    Name: <%= @todo.name %>
+  </p>
+  <p>
+    Description: <%= @todo.description %>
+  </p>
+  
+  <%= link_to "Edit", edit_todo_path(@todo), class: "btn btn-info" %>
+  </br></br>
+  <%= link_to "Return to Listing", todos_path %>
+</div>
