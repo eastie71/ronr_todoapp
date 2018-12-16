@@ -1,5 +1,7 @@
-<% flash.each do |name, msg| %>
-  <ul>
-    <li><%= msg %></li>
-  </ul>
-<% end %>
+<div class="container">
+  <% flash.each do |name, msg| %>
+    <ul class="list-group">
+      <li class="list-group-item list-group-item-light"><%= msg %></li>
+    </ul>
+  <% end %>
+</div>

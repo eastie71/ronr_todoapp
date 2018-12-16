@@ -1,5 +1,8 @@
 {
   "name": "todoapp",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "heroku": "^7.19.3",
+    "heroku-cli": "^7.0.9"
+  }
 }
