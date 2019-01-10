@@ -5,4 +5,6 @@ Rails.application.routes.draw do
   get '/help', to: 'pages#help'
   
   resources :todos
+  get '/signup', to: 'users#new'
+  resources :users, except: [:new]
 end

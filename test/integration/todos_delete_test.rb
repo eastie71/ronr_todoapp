@@ -2,7 +2,9 @@ require 'test_helper'
 
 class TodosDeleteTest < ActionDispatch::IntegrationTest
   def setup
-    @aTodo = Todo.create!(name: "testing todo name", description: "testing todo description")
+    @aUser = User.create!(name: "Craig", email: "cde@mail.com.au",
+                    password: "password", password_confirmation: "password")
+    @aTodo = Todo.create!(name: "testing todo name", description: "testing todo description", user: @aUser)
   end
   
   test "should delete todo successfully" do

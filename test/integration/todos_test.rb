@@ -2,7 +2,9 @@ require 'test_helper'
 
 class TodosTest < ActionDispatch::IntegrationTest
   def setup
-    @aTodo = Todo.create!(name: "testing todo name", description: "testing todo description")
+    @aUser = User.create!(name: "Craig", email: "cde@mail.com.au",
+                    password: "password", password_confirmation: "password")
+    @aTodo = Todo.create!(name: "testing todo name", description: "testing todo description", user: @aUser)
   end
   
   
@@ -38,7 +40,7 @@ class TodosTest < ActionDispatch::IntegrationTest
     my_todo_desc = "my description of todo"
     # Check to see if count of todo increases after posting valid todo
     assert_difference 'Todo.count' do
-      post todos_path, params: { todo: {name: my_todo_name, description: my_todo_desc}}
+      post todos_path, params: { todo: {name: my_todo_name, description: my_todo_desc, user: @aUser}}
     end
     # After successful post should follow the redirect to the SHOW page
     follow_redirect!
