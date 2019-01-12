@@ -34,6 +34,7 @@ class TodosTest < ActionDispatch::IntegrationTest
   end
   
   test "create new valid todo" do
+    sign_in_as(@aUser, @aUser.password)
     get new_todo_path
     assert_template 'todos/new'
     my_todo_name = "my new todo item"
@@ -49,6 +50,7 @@ class TodosTest < ActionDispatch::IntegrationTest
   end
   
   test "reject invalid new todo" do
+    sign_in_as(@aUser, @aUser.password)
     get new_todo_path
     assert_template 'todos/new'
     my_todo_name = "valid todo name"

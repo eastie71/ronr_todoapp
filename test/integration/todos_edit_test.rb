@@ -8,6 +8,7 @@ class TodosEditTest < ActionDispatch::IntegrationTest
   end
   
   test "should edit valid todo successfully" do
+    sign_in_as(@aUser, @aUser.password)
     get todo_path(@aTodo)
     assert_template 'todos/show'
     # Check there is a Edit button link
@@ -25,6 +26,7 @@ class TodosEditTest < ActionDispatch::IntegrationTest
   end
   
   test "should fail to edit invalid todo" do
+    sign_in_as(@aUser, @aUser.password)
     get edit_todo_path(@aTodo)
     # Try to update an empty todo
     patch todo_path(@aTodo), params: {todo: {name: " ", description: " "}}

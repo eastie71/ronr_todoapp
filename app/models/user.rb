@@ -8,5 +8,5 @@ class User < ApplicationRecord
   # dependent destroy means todos are removed on a user destroy(delete)
   has_many :todos, dependent: :destroy
   has_secure_password
-  validates :password, presence: true, length: {minimum: 5}
+  validates :password, presence: true, length: {minimum: 5}, allow_nil: true
 end

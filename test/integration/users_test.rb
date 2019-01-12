@@ -33,8 +33,8 @@ class UsersTest < ActionDispatch::IntegrationTest
       post users_path, params: { user: {name: "Craig", email: "craig@test.com", password: "password", password_confirmation: "password"}}
     end
     # Should go to show page after create
-    #follow_redirect!
-    #assert_template 'users/show'
+    follow_redirect!
+    assert_template 'users/show'
     # Check for flash message of successful create
     assert_not flash.empty?
   end

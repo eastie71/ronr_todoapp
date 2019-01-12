@@ -1,22 +1,4 @@
 <h1>Listing all TODOs</h1>
 </br>
-<p>
-  <%= link_to "Create New TODO", new_todo_path %>
-</p>
-</br>
-<table class="table table-hover table-dark left-align">
-  <tr class="left-align">
-    <th>Name</th>
-    <th>Description</th>
-  </tr>
-  <% @todos.each do |todo| %>
-    <tr>
-      <td><%= todo.name %></td>
-      <td><%= todo.description %></td>
-      <td><%= link_to "Edit", edit_todo_path(todo) %></td>
-      <td><%= link_to "Show", todo_path(todo) %></td>
-      <td><%= link_to "Delete", todo_path(todo), method: :delete, data: {confirm: "Delete Todo: Are you sure?"} %></td>
-    </tr>
-  <% end %>
-</table>
+<%= render 'todo', object: @todos %>
 

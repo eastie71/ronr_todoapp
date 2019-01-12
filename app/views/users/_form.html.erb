@@ -58,7 +58,7 @@
       </div>
     <% end %>
     <div class="col-md-offset-5 col-md-7 cancel">
-      [ <%= link_to @user.new_record? ? "CANCEL SIGNUP" : "CANCEL EDIT", root_path %> ]
+      [ <%= link_to @user.new_record? ? "CANCEL SIGNUP" : "CANCEL EDIT", root_path, class: "text-info" %> ]
     </div>
   </div>
 </div>
