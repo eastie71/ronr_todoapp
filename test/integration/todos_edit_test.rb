@@ -30,7 +30,7 @@ class TodosEditTest < ActionDispatch::IntegrationTest
     patch todo_path(@aTodo), params: {todo: {name: " ", description: " "}}
     # Should remain on the edit template
     assert_template 'todos/edit'
-    # Make sure there is a h2 element with the word errors in it
-    assert_select 'h2', :text => /errors/
+    # Make sure there is a h5 element with the word errors in it
+    assert_select 'h5', :text => /errors/
   end
 end

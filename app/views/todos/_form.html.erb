@@ -1,10 +1,25 @@
 <% if @todo.errors.any? %>
-  <h2>The following errors occurred when trying to save the todo</h2>
-  <ul>
-    <% @todo.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
-  </ul>
+  <div class="row">
+    <div class="col-md-offset-2 col-md-8">
+      <div class="card text-white bg-danger mb-3"">
+        <h5 class="card-header">
+          <% if @todo.new_record? %>
+            Failed to Create 
+          <% else %>
+            Failed to Edit
+          <% end %>
+          <%= @todo.class %>, <%= pluralize(@todo.errors.count, "error") %> occured:
+        </h5>
+        <div class="card-body">
+          <ul>
+            <% @todo.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
 <% end %>
 <%= form_for @todo do |f| %>
   <p>

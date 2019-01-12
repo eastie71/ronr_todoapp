@@ -58,7 +58,7 @@ class TodosTest < ActionDispatch::IntegrationTest
       post todos_path, params: { todo: {name: my_todo_name, description: my_invalid_todo_desc}}
     end
     assert_template 'todos/new'
-    # Make sure there is a h2 element and it has the word "errors" in its content
-    assert_select 'h2', :text => /errors/
+    # Make sure there is a h5 element and it has the word "errors" in its content
+    assert_select 'h5', :text => /error/
   end
 end
