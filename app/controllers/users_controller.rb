@@ -1,5 +1,13 @@
 class UsersController < ApplicationController
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :require_same_user_or_admin, only: [:edit, :show, :update, :destroy]
+  before_action :require_admin, only: [:destroy, :index]
+  
   def new
+    if current_user
+      flash[:danger] = "You are already logged in. Logout if you wish to Signup again"
+      redirect_to user_path(current_user)
+    end
     @user = User.new
   end
   
@@ -16,36 +24,52 @@ class UsersController < ApplicationController
   end
   
   def show
-    @user = User.find(params[:id])
     @user_todos = @user.todos
   end
   
   def edit
-    @user = User.find(params[:id])
   end
   
   def update
-    @user = User.find(params[:id])
     if @user.update(user_params)
       flash[:success] = "Your account was updated successfully."
       # Go the user SHOW page
       redirect_to @user
     else
-      if @user.errors.any?
-        puts "Had Errors!"
-        @user.errors.full_messages.each do |msg|
-          puts msg
-        end
-      else
-        puts "NO Errors"
-      end
-   
+      @user.reload
       render 'edit'
     end
+  end
+  
+  def destroy
   end
   
   private
     def user_params
       params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    end
+    
+    def set_user
+      @user = User.find(params[:id])
+    end
+    
+    def require_same_user_or_admin
+      if !logged_in?
+        flash[:danger] = "You cannot perform that action!"
+        redirect_to root_path
+      elsif current_user && current_user != @user && !current_user.admin?
+        flash[:danger] = "You can only view or modify your own account!"
+        redirect_to user_path(current_user)
+      end
+    end
+  
+    def require_admin
+      if !logged_in?
+        flash[:danger] = "You cannot perform that action!"
+        redirect_to root_path
+      elsif current_user && !current_user.admin?
+        flash[:danger] = "Only admin users can perform this action"
+        redirect_to root_path
+      end
     end
 end

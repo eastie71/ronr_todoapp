@@ -39,4 +39,16 @@ class UserEditTest < ActionDispatch::IntegrationTest
     assert_match "Craig2", @aUser.name
     assert_match "cde2@mail.com.au", @aUser.email
   end
+  
+  test "reject edit by nonadmin user" do
+    sign_in_as(@non_admin_user, @non_admin_user.password)
+    get edit_user_path(@aUser)
+    follow_redirect!
+    assert_template 'users/show'
+    patch user_path(@aUser), params: { user: {name: "Craig3", email: "cde3@mail.com.au"} }
+    # Check values have NOT changed
+    @aUser.reload
+    assert_match "Craig", @aUser.name
+    assert_match "cde@mail.com.au", @aUser.email
+  end
 end

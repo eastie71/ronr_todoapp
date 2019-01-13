@@ -1,2 +1,5 @@
 <h2 align="center"><%= "#{@user.name.gsub(/\w{2,}\b/) { |word| word.capitalize }}'s Account Details" %></h2>
 <hr />
+<div class="container left-align">
+  <%= render 'form' %> 
+</div>

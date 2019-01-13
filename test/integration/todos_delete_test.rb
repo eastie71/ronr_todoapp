@@ -8,15 +8,13 @@ class TodosDeleteTest < ActionDispatch::IntegrationTest
   end
   
   test "should delete todo successfully" do
-    get todos_path
-    assert_template 'todos/index'
+    sign_in_as(@aUser, @aUser.password)
     assert_select 'a[href=?]', todo_path(@aTodo), text: "Delete"
     # Check that count decreases by 1 on delete
     assert_difference 'Todo.count', -1 do
       delete todo_path(@aTodo)
     end
-    # Should return to Index page and flash a success message
-    assert_redirected_to todos_path
+    # Should flash a success message
     assert_not flash.empty?
   end
 end

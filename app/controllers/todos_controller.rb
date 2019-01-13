@@ -1,5 +1,6 @@
 class TodosController < ApplicationController
   before_action :set_todo, only: [:show, :edit, :update, :destroy]
+  before_action :require_admin, only: [:index]
   
   def index
     # set an instance variable for the list of todos
@@ -12,8 +13,7 @@ class TodosController < ApplicationController
   
   def create
     @todo = Todo.new(todo_params)
-    # Hard Code to FIRST User for time-being - will be current user later
-    @todo.user = User.first
+    @todo.user = current_user
     if @todo.save
       flash[:notice] = "Todo created successfully!"
       redirect_to todo_path(@todo)
@@ -50,5 +50,11 @@ class TodosController < ApplicationController
     end
     def todo_params
       params.require(:todo).permit(:name,:description)
+    end
+    def require_admin
+      if !current_user || !current_user.admin?
+        flash[:danger] = "You do not have permission to perform this action"
+        redirect_to root_path
+      end
     end
 end

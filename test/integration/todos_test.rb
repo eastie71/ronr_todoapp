@@ -2,18 +2,21 @@ require 'test_helper'
 
 class TodosTest < ActionDispatch::IntegrationTest
   def setup
+    # Note: Only an ADMIN user can see the FULL todos list
     @aUser = User.create!(name: "Craig", email: "cde@mail.com.au",
-                    password: "password", password_confirmation: "password")
+                    password: "password", password_confirmation: "password", admin: true)
     @aTodo = Todo.create!(name: "testing todo name", description: "testing todo description", user: @aUser)
   end
   
   
   test "should get todos index" do
+    sign_in_as(@aUser, @aUser.password)
     get todos_path
     assert_response :success
   end
   
   test "should get todos list" do
+    sign_in_as(@aUser, @aUser.password)
     get todos_path
     assert_template 'todos/index'
     # search for links to the specific todo items (td tags) - which are on the todo lines
