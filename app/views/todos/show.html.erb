@@ -10,5 +10,8 @@
   
   <%= link_to "Edit", edit_todo_path(@todo), class: "btn btn-info" %>
   </br></br>
-  <%= link_to "Return to Listing", todos_path %>
+  <%= link_to "Return to Listing", user_path(current_user), class: "text-info" %>
+  <% if current_user && current_user.admin? %>
+    <p><%= link_to "Return to ALL Listing", todos_path, class: "text-info" %></p>
+  <% end %>
 </div>

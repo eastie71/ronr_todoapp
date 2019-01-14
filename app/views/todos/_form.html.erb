@@ -35,3 +35,6 @@
   </p>
 <% end %>
 <%= link_to "Return to Listing", user_path(current_user), class: "text-info" %>
+<% if current_user && current_user.admin? %>
+  <p><%= link_to "Return to ALL Listing", todos_path, class: "text-info" %></p>
+<% end %>

@@ -9,8 +9,8 @@ class TodosEditTest < ActionDispatch::IntegrationTest
   
   test "should edit valid todo successfully" do
     sign_in_as(@aUser, @aUser.password)
-    get todo_path(@aTodo)
-    assert_template 'todos/show'
+    get user_path(@aUser)
+    assert_template 'users/show'
     # Check there is a Edit button link
     assert_select 'a[href=?]', edit_todo_path(@aTodo), text: "Edit"
     get edit_todo_path(@aTodo)

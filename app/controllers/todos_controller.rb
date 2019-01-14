@@ -1,6 +1,7 @@
 class TodosController < ApplicationController
   before_action :set_todo, only: [:show, :edit, :update, :destroy]
   before_action :require_admin, only: [:index]
+  before_action :require_same_user_or_admin, only: [:edit, :show, :update, :destroy]
   
   def index
     # set an instance variable for the list of todos
@@ -41,19 +42,38 @@ class TodosController < ApplicationController
     @todo.destroy
     flash[:notice] = "TODO was deleted successfully"
     # Return to Listing page
-    redirect_to todos_path
+    if logged_in? && current_user.admin?
+      redirect_to todos_path
+    else 
+      redirect_to user_path(current_user)
+    end
   end
   
   private
     def set_todo
       @todo = Todo.find(params[:id])
     end
+    
     def todo_params
       params.require(:todo).permit(:name,:description)
     end
+    
+    def require_same_user_or_admin
+      if !logged_in?
+        flash[:danger] = "You cannot perform that action!"
+        redirect_to root_path
+      elsif current_user && current_user != @todo.user && !current_user.admin?
+        flash[:danger] = "You can only view or modify your own account!"
+        redirect_to user_path(current_user)
+      end
+    end
+    
     def require_admin
-      if !current_user || !current_user.admin?
-        flash[:danger] = "You do not have permission to perform this action"
+      if !logged_in?
+        flash[:danger] = "You cannot perform that action!"
+        redirect_to root_path
+      elsif current_user && !current_user.admin?
+        flash[:danger] = "Only admin users can perform this action"
         redirect_to root_path
       end
     end

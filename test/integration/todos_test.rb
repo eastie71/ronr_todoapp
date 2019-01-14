@@ -26,6 +26,7 @@ class TodosTest < ActionDispatch::IntegrationTest
   end
   
   test "should show the todo" do
+    sign_in_as(@aUser, @aUser.password)
     get todo_path(@aTodo)
     assert_template 'todos/show'
     # search for the todo name and description in the body
@@ -33,7 +34,7 @@ class TodosTest < ActionDispatch::IntegrationTest
     assert_match @aTodo.description, response.body
     # there should be an Edit and Return to listing links
     assert_select 'a[href=?]', edit_todo_path(@aTodo), text: "Edit"
-    assert_select 'a[href=?]', todos_path, text: "Return to Listing"
+    assert_select 'a[href=?]', todos_path, text: "Return to ALL Listing"
   end
   
   test "create new valid todo" do

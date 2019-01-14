@@ -8,6 +8,9 @@
       -->
       <% if logged_in? %>
         <%= link_to "List", user_path(current_user), :class => "nav-link" %>
+        <% if current_user.admin? %>
+          <%= link_to "List ALL", todos_path, :class => "nav-link" %>
+        <% end %>
         <%= link_to "Create", new_todo_path, :class => "nav-link" %>
         <%= link_to "Account", edit_user_path(current_user), :class => "nav-link" %>
       <% end %>

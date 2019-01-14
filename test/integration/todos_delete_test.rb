@@ -9,6 +9,7 @@ class TodosDeleteTest < ActionDispatch::IntegrationTest
   
   test "should delete todo successfully" do
     sign_in_as(@aUser, @aUser.password)
+    get user_path(@aUser)
     assert_select 'a[href=?]', todo_path(@aTodo), text: "Delete"
     # Check that count decreases by 1 on delete
     assert_difference 'Todo.count', -1 do
