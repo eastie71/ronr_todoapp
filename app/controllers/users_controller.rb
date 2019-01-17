@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :require_same_user_or_admin, only: [:edit, :show, :update, :destroy]
+  before_action :require_same_user_or_admin, only: [:edit, :show, :update]
   before_action :require_admin, only: [:destroy, :index]
   
   def new
@@ -23,6 +23,10 @@ class UsersController < ApplicationController
     end
   end
   
+  def index
+    @users = User.all
+  end
+  
   def show
     @user_todos = @user.todos
   end
@@ -42,6 +46,16 @@ class UsersController < ApplicationController
   end
   
   def destroy
+    if current_user != @user
+      user_name = @user.name
+      @user.destroy
+      flash[:notice] = "User: \"" + user_name + "\" was deleted successfully"
+      # Return to User Listing page
+      redirect_to users_path
+    else
+      flash[:danger] = "You cannot delete your own account"
+      redirect_to users_path
+    end
   end
   
   private
